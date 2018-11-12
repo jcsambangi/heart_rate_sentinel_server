@@ -1,0 +1,14 @@
+numpy
+scipy
+ipython
+matplotlib
+scikit-image
+scikit-learn
+sphinx
+pytest
+pytest-pep8
+pytest-cov
+flask
+gunicorn
+cython
+sendgrid
