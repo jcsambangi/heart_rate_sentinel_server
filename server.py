@@ -4,6 +4,7 @@
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+patientRecord = {}
 
 
 @app.route("/api/new_patient", methods=["POST"])
@@ -14,6 +15,9 @@ def new_patient():
     :param attending_email: attending physician's email as string
     :param user_age: patient's age in years as integer
     """
+    new_patient_data = request.get_json()
+    from outsource import add_new_patient
+    patientRecord = add_new_patient(new_patient_data, patientRecord)
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET", "POST"])
