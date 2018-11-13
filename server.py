@@ -14,6 +14,7 @@ def new_patient():
     :param patient_id: patient id as string
     :param attending_email: attending physician's email as string
     :param user_age: patient's age in years as integer
+    :returns: updated records as JSON
     """
     new_patient_data = request.get_json()
     from outsource import add_new_patient
@@ -21,23 +22,31 @@ def new_patient():
     return jsonify(patientRecord)
 
 
-@app.route("/api/heart_rate/<patient_id>", methods=["GET", "POST"])
-def heart_rate(patient_id):
-    """GETs all HRs or POSTs new heart rate with timestamp.
+@app.route("/api/heart_rate", methods=["POST"])
+def heart_rate_post():
+    """POSTs patient's new heart rate with timestamp.
     Checks for tachycardia and emails physician if tachycardic.
 
     :param patient_id: patient id as string
-    :param heart_rate: only if POSTing - heart rate as integer
+    :param heart_rate: heart rate as integer
+    :returns: updated records as JSON
     """
     """EMAIL"""
-    if request.method == 'POST':
-        new_HR = request.get_json()
-        from outsource import add_heart_rate
-        patientRecord = add_heart_rate(new_HR, patientRecord)
-        return jsonify(patientRecord)
-    else:
-        from outsource import get_heart_rates
-        return jsonify(get_heart_rates(patient_id, patientRecord))
+    new_HR = request.get_json()
+    from outsource import add_heart_rate
+    patientRecord = add_heart_rate(new_HR, patientRecord)
+    return jsonify(patientRecord)
+
+
+@app.route("/api/heart_rate/<patient_id>", methods=["GET"])
+def heart_rate_get(patient_id):
+    """GETs all HRs for patient.
+
+    :param patient_id: patient id as string
+    :returns: list of HRs as JSON
+    """
+    from outsource import get_heart_rates
+    return jsonify(get_heart_rates(patient_id, patientRecord))
 
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
@@ -45,6 +54,7 @@ def status(patient_id):
     """GETs whether patient is tachycardic and returns timestamp using last HR.
 
     :param patient_id: patient id as string
+    :returns: whether patient is tachycardic and last timestamp
     """
     from outsource import get_status
     return jsonify(get_status(patient_id, patientRecord))
@@ -55,6 +65,7 @@ def average(patient_id):
     """GETs average HR over all stored HRs.
 
     :param patient_id: patient id as string
+    :returns: average HR as JSON
     """
     from outsource import get_average
     return jsonify(get_average(patient_id, patientRecord))
@@ -66,6 +77,7 @@ def interval_average():
 
     :param patient_id: patient id as string
     :param heart_rate_average_since: timestamp as string
+    :returns: average HR over interval as JSON
     """
     query_interval_average = request.get_json()
     from outsource import get_interval_average
