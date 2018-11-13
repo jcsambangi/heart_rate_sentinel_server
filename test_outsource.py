@@ -5,7 +5,7 @@ new_patient_data = {
         "patient_id": "1",
         "attending_email": "suyash.kumar@duke.edu",
         "user_age": 50
-} 
+}
 patientRecord = {
         "2": ["suyash.kumar@duke.edu", 50, [[], []]]
 }
