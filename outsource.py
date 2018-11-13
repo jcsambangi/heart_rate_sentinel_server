@@ -13,5 +13,5 @@ def add_new_patient(new_patient_data, patientRecord):
     npdata = validate_new_patient(new_patient_data)
     if npdata is not None:
         patientRecord[npdata["patient_id"]] = [npdata["attending_email"],
-                                               npdata["user_age"], []]
+                                               npdata["user_age"], [[], []]]
     return patientRecord
