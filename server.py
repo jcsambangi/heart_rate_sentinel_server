@@ -33,11 +33,11 @@ def heart_rate(patient_id):
     if request.method == 'POST':
         new_HR = request.get_json()
         from outsource import add_heart_rate
-        patientRecord = add_heart_rate(new_HR)
+        patientRecord = add_heart_rate(new_HR, patientRecord)
         return jsonify(patientRecord)
     else:
         from outsource import get_heart_rates
-        return jsonify(get_heart_rates(patient_id))
+        return jsonify(get_heart_rates(patient_id, patientRecord))
 
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
@@ -47,7 +47,7 @@ def status(patient_id):
     :param patient_id: patient id as string
     """
     from outsource import get_status
-    return jsonify(get_status(patient_id))
+    return jsonify(get_status(patient_id, patientRecord))
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
@@ -57,7 +57,7 @@ def average(patient_id):
     :param patient_id: patient id as string
     """
     from outsource import get_average
-    return jsonify(get_average(patient_id))
+    return jsonify(get_average(patient_id, patientRecord))
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
@@ -67,9 +67,9 @@ def interval_average():
     :param patient_id: patient id as string
     :param heart_rate_average_since: timestamp as string
     """
-    request_interval_average = request.get_json()
+    query_interval_average = request.get_json()
     from outsource import get_interval_average
-    return jsonify(get_interval_average(request_interval_average))
+    return jsonify(get_interval_average(query_interval_average, patientRecord))
 
 
 if __name__ == "__main__":
