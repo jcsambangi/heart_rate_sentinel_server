@@ -10,17 +10,20 @@ def validate_new_patient(new_patient_data):
     """
     npdata = new_patient_data
     if type(npdata) is not dict:
-        return None
+        raise TypeError
     if "patient_id" not in npdata:
-        return None
+        raise TypeError
     if type(npdata["patient_id"]) is not str:
-        return None
+        raise ValueError
     if "attending_email" not in npdata:
-        return None
+        raise TypeError
     if type(npdata["attending_email"]) is not str:
-        return None
+        raise ValueError
     if "user_age" not in npdata:
-        return None
-    if type(npdata["user_age"]) is not int:
-        return None
+        raise TypeError
+    age = npdata["user_age"]
+    if type(age) is not int and type(age) is not float:
+        raise ValueError
+    if age < 0:
+        raise ValueError
     return npdata

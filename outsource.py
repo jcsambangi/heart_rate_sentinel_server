@@ -101,7 +101,7 @@ def get_interval_average(query_interval_average, patientRecord):
         startTime = interval["heart_rate_average_since"]
         allHRdata = patientRecord[patientID][2]
         index = 0
-        while allHRdata[1][index] <= timestamp
+        while allHRdata[1][index] <= timestamp:
             index += 1
         summation = 0
         numSum = len(allHRdata[1]-index)

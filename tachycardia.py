@@ -11,15 +11,15 @@ def is_tachycardic(age, latestHR):
     :returns: "Yes." or "No." for ages >= 1 day old
     """
     oldest = ages[len(ages)-1]
-    if age = oldest:
+    if age == oldest:
         ind = ages.index(oldest)-1
     else:
         ind = ages.index(oldest)
-        while age < ages[ind]
+        while age < ages[ind] and ind >= 0:
             ind -= 1
         if ind < 0:
             return "Cannot evaluate at this age."
-    if latestHR > cutoffs(ind):
+    if latestHR > cutoffs[ind]:
         return "Yes." 
     else:
         return "No."
