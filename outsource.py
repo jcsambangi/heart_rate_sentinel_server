@@ -71,7 +71,8 @@ def get_status(patient_id, patientRecord):
         HRs = allHRdata[0]
         yesOrNo = is_tachycardic(patientRecord[patient_id][1], HRs.reverse()[0])
         timestamps = allHRdata[1]
-        latest = timestamps.reverse()[0]
+        last = timestamps.reverse()[0]
+        latest = last.strftime("%Y-%m-%d %H:%M:%S.%f")
         return {"Is {} tachycardic?".format(patient_id): yesOrNo,
                 "Time of latest heart rate measurement": latest}
     else:
@@ -112,8 +113,11 @@ def get_interval_average(query_interval_average, patientRecord):
         startTime = interval["heart_rate_average_since"]
         allHRdata = patientRecord[patientID][2]
         index = 0
-        while allHRdata[1][index] <= timestamp:
-            index += 1
+        total = len(allHRdata[1])-1
+        while allHRdata[1][index] <= timestamp and index <= total
+           index += 1
+        if index > total:
+            return "No heart rate measurements since this date."
         summation = 0
         numSum = len(allHRdata[1]-index)
         for i in range(index, numSum):

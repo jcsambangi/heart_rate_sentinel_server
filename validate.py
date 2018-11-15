@@ -1,6 +1,8 @@
 """Validates data send to the server.
 """
 
+from datetime import datetime
+
 
 def validate_new_patient(new_patient_data):
     """Ensures new patient dictionary has correct fields and types.
@@ -77,4 +79,10 @@ def validate_query_interval_average(query_interval_average):
     if type(interval["patient_id"]) is not str:
         raise ValueError
     if "heart_rate_average_since" not in interval:
-        raise TyperError
+        raise TypeError
+    startTime = interval["heart_rate_average_since"]
+    if type(startTime) is not str:
+        raise ValueError
+    dtObj = datetime.strptime(startTime, "%Y-%m-%d %H:%M:%S.%f")
+    interval["heart_rate_average_since"] = dtObj
+    return interval
