@@ -18,8 +18,15 @@ def new_patient():
     """
     new_patient_data = request.get_json()
     from outsource import add_new_patient
-    patientRecord = add_new_patient(new_patient_data, patientRecord)
-    return jsonify(patientRecord)
+    try:
+        patientRecord = add_new_patient(new_patient_data, patientRecord)
+        return jsonify(patientRecord), 200
+    except TypeError:
+        return jsonify("Please check that all fields were input."), 400
+    except ValueError:
+        return jsonify("Please check that input data is correct."), 400
+    except:
+        return jsonify("Something went wrong."), 501
 
 
 @app.route("/api/heart_rate", methods=["POST"])
@@ -34,8 +41,15 @@ def heart_rate_post():
     """EMAIL"""
     new_HR = request.get_json()
     from outsource import add_heart_rate
-    patientRecord = add_heart_rate(new_HR, patientRecord)
-    return jsonify(patientRecord)
+    try:
+        patientRecord = add_heart_rate(new_HR, patientRecord)
+        return jsonify(patientRecord), 200
+    except TypeError:
+        return jsonify("Please check that all fields were input."), 400
+    except ValueError:
+        return jsonify("Please check that input data is correct."), 400
+    except:
+        return jsonify("Something went wrong."), 501
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
@@ -46,8 +60,15 @@ def heart_rate_get(patient_id):
     :returns: list of HRs as JSON
     """
     from outsource import get_heart_rates
-    return jsonify(get_heart_rates(patient_id, patientRecord))
-
+    try:
+        return jsonify(get_heart_rates(patient_id, patientRecord)), 200
+    except TypeError:
+        return jsonify("Please check that patient id is a string."), 400
+    except ValueError:
+        return jsonify("Please initialize the patient first."), 400
+    except:
+        return jsonify("Something went wrong."), 501
+    
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
@@ -57,7 +78,14 @@ def status(patient_id):
     :returns: whether patient is tachycardic and last timestamp
     """
     from outsource import get_status
-    return jsonify(get_status(patient_id, patientRecord))
+    try:
+        return jsonify(get_status(patient_id, patientRecord)), 200
+    except TypeError:
+        return jsonify("Please check that patient id is a string."), 400
+    except ValueError:
+        return jsonify("Please initialize the patient first."), 400
+    except:
+        return jsonify("Something went wrong."), 501
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
@@ -68,7 +96,14 @@ def average(patient_id):
     :returns: average HR as JSON
     """
     from outsource import get_average
-    return jsonify(get_average(patient_id, patientRecord))
+    try:
+        return jsonify(get_average(patient_id, patientRecord)), 200
+     except TypeError:
+        return jsonify("Please check that patient id is a string."), 400
+    except ValueError:
+        return jsonify("Please initialize the patient first."), 400
+    except:
+        return jsonify("Something went wrong."), 501
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
@@ -81,7 +116,15 @@ def interval_average():
     """
     query_interval_average = request.get_json()
     from outsource import get_interval_average
-    return jsonify(get_interval_average(query_interval_average, patientRecord))
+    try:
+        interval_average = get_interval_average(query_interval_average, patientRecord)
+        return jsonify(interval_average), 200
+    except TypeError:
+        return jsonify("Please check that all fields were input."), 400
+    except ValueError:
+        return jsonify("Please check that input data is correct."), 400
+    except:
+        return jsonify("Something went wrong."), 501
 
 
 if __name__ == "__main__":
