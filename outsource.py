@@ -114,7 +114,7 @@ def get_interval_average(query_interval_average, patientRecord):
         allHRdata = patientRecord[patientID][2]
         index = 0
         total = len(allHRdata[1])-1
-        while allHRdata[1][index] <= timestamp and index <= total
+        while allHRdata[1][index] <= timestamp and index <= total:
            index += 1
         if index > total:
             return "No heart rate measurements since this date."

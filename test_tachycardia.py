@@ -17,3 +17,8 @@ testData = [
 def test_tachycardia(age, latestHR, result):
     from tachycardia import is_tachycardic
     assert is_tachycardic(age, latestHR) == result
+
+
+def test_send_email():
+    from tachycardia import send_email
+    assert int(str(send_email("js593@duke.edu", "Example"))[0]) == 2

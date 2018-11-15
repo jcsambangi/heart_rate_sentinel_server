@@ -41,8 +41,8 @@ def send_email(attending_email, patient_id):
     to_email = Email(attending_email)
     from_email = Email("jcsambangi@gmail.com")
     subject = "Tachycardia Warning"
-    content = Content("text/plain",
-                      "Warning: patient {} is tachycardic".format(patient_id))
+    bodyText = "Warning: patient {} is currently tachycardic.".format(patient_id)
+    content = Content("text/plain", bodyText)
     mail = Mail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
     return response.status_code
