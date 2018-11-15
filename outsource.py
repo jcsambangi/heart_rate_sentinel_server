@@ -28,8 +28,13 @@ def add_heart_rate(new_HR, patientRecord):
     from validate import validate_new_HR
     newHR = validate_new_HR(new_HR)
     if newHR["patient_id"] in patientRecord:
-        patientRecord[newHR["patient_id"]][2][0].append(newHR["heart_rate"])
-        patientRecord[newHR["patient_id"]][2][1].append(datetime.now())
+        patient_id = newHR["patient_id"]
+        patientRecord[patient_id][2][0].append(newHR["heart_rate"])
+        patientRecord[patient_id][2][1].append(datetime.now())
+        from tachycardia import is_tachycardic, send_email
+        if is_tachycardic(patientRecord[patient_id][1],
+                          newHR["heart_rate"]) == "Yes.":
+            send_email(patientRecord[patient_id][0], patient_id)
         return patientRecord
     else:
         raise ValueError
@@ -42,6 +47,8 @@ def get_heart_rates(patient_id, patientRecord):
     :param patientRecord: dictionary of all records to date
     :returns: dictionary of all HRs associated with requested patient
     """
+    from validate import check_patient_id
+    patient_id = check_patient_id(patient_id)
     if patient_id in patientRecord:
         farmHR = patientRecord[patient_id][2][0]
         return farmHR
@@ -56,6 +63,8 @@ def get_status(patient_id, patientRecord):
     :param patientRecord: dictionary of all records to date
     :returns: dictionary of status and latest timestamp
     """
+    from validate import check_patient_id
+    patient_id = check_patient_id(patient_id)
     if patient_id in patientRecord:
         from tachycardia import is_tachycardic
         allHRdata = patientRecord[patient_id][2]
@@ -76,6 +85,8 @@ def get_average(patient_id, patientRecord):
     :param patientRecord: dictionary of all records to date
     :returns: integer average HR
     """
+    from validate import check_patient_id
+    patient_id = check_patient_id(patient_id)
     if patient_id in patientRecord:
         HRs = patientRecord[patient_id][2][0]
         summation = 0

@@ -1,5 +1,10 @@
 """Deals with tachycardic states.
 """
+
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+
 ages = [1/365, 3/365, 1/52, 1/12, 3/12, 6/12, 1, 3, 5, 8, 12, 15]
 cutoffs = [159, 166, 182, 179, 186, 169, 151, 137, 133, 130, 119, 100]
 
@@ -23,3 +28,21 @@ def is_tachycardic(age, latestHR):
         return "Yes." 
     else:
         return "No."
+
+
+def send_email(attending_email, patient_id):
+    """Sends warning email if patient is tachycardic.
+
+    :param attending_email: email destination
+    :param patient_id: patient who is tachycardic
+    :returns: status code associated with request
+    """
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+    to_email = Email(attending_email)
+    from_email = Email("jcsambangi@gmail.com")
+    subject = "Tachycardia Warning"
+    content = Content("text/plain",
+                      "Warning: patient {} is tachycardic".format(patient_id))
+    mail = Mail(from_email, subject, to_email, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    return response.status_code
