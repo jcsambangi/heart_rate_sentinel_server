@@ -13,9 +13,8 @@ def add_new_patient(new_patient_data, patientRecord):
     """
     from validate import validate_new_patient
     npdata = validate_new_patient(new_patient_data)
-    if npdata is not None:
-        patientRecord[npdata["patient_id"]] = [npdata["attending_email"],
-                                               npdata["user_age"], [[], []]]
+    patientRecord[npdata["patient_id"]] = [npdata["attending_email"],
+                                           npdata["user_age"], [[], []]]
     return patientRecord
 
 
@@ -28,10 +27,12 @@ def add_heart_rate(new_HR, patientRecord):
     """
     from validate import validate_new_HR
     newHR = validate_new_HR(new_HR)
-    if newHR is not None and newHR["patient_id"] in patientRecord:
+    if newHR["patient_id"] in patientRecord:
         patientRecord[newHR["patient_id"]][2][0].append(newHR["heart_rate"])
         patientRecord[newHR["patient_id"]][2][1].append(datetime.now())
-    return patientRecord
+        return patientRecord
+    else:
+        raise ValueError
 
 
 def get_heart_rates(patient_id, patientRecord):
@@ -41,7 +42,11 @@ def get_heart_rates(patient_id, patientRecord):
     :param patientRecord: dictionary of all records to date
     :returns: dictionary of all HRs associated with requested patient
     """
-    return farmHR
+    if patient_id in patientRecord:
+        farmHR = patientRecord[patient_id][2][0]
+        return farmHR
+    else:
+        raise ValueError
 
 
 def get_status(patient_id, patientRecord):
@@ -51,7 +56,17 @@ def get_status(patient_id, patientRecord):
     :param patientRecord: dictionary of all records to date
     :returns: dictionary of status and latest timestamp
     """
-    return status
+    if patient_id in patientRecord:
+        from tachycardia import is_tachycardic
+        allHRdata = patientRecord[patient_id][2]
+        HRs = allHRdata[0]
+        yesOrNo = is_tachycardic(patient_ID, HRs.reverse()[0])
+        timestamps = allHRdata[1]
+        latest = timestamps.reverse()[0]
+        return {"Is {} tachycardic?".format(patient_id): yesOrNo,
+                "Time of latest heart rate measurement": latest}
+    else:
+        raise ValueError
 
 
 def get_average(patient_id, patientRecord):
@@ -59,9 +74,17 @@ def get_average(patient_id, patientRecord):
 
     :param patient_id: patient id as string
     :param patientRecord: dictionary of all records to date
-    :returns: dictionary of average HR
+    :returns: integer average HR
     """
-    return average_HR
+    if patient_id in patientRecord:
+        HRs = patientRecord[patient_id][2][0]
+        summation = 0
+        for x in HRs:
+            summation += x
+        average_HR = round(summation/len(HRs))
+        return average_HR
+    else: 
+        raise ValueError
 
 
 def get_interval_average(query_interval_average, patientRecord):
@@ -69,12 +92,11 @@ def get_interval_average(query_interval_average, patientRecord):
 
     :param query_interval_average: Python object of received JSON
     :param patientRecord: dictionary of all records to date
-    :returns: dictionary of average HR over interval
+    :returns: integer average HR over interval
     """
-    """Bad input?"""
     from validate import validate_query_interval_average
     interval = validate_query_interval_average(query_interval_average)
-    if interval is not None and interval["patient_id"] in patientRecord:
+    if interval["patient_id"] in patientRecord:
         patientID = interval["patient_id"]
         startTime = interval["heart_rate_average_since"]
         allHRdata = patientRecord[patientID][2]
@@ -86,4 +108,6 @@ def get_interval_average(query_interval_average, patientRecord):
         for i in range(index, numSum):
             summation += allHRdata[0][i]
         interval_average_HR = round(summation/numSum)
-    return interval_average_HR
+        return interval_average_HR
+    else:
+        raise ValueError
