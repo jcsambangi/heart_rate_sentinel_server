@@ -60,7 +60,7 @@ def get_status(patient_id, patientRecord):
         from tachycardia import is_tachycardic
         allHRdata = patientRecord[patient_id][2]
         HRs = allHRdata[0]
-        yesOrNo = is_tachycardic(patient_ID, HRs.reverse()[0])
+        yesOrNo = is_tachycardic(patientRecord[patient_id][1], HRs.reverse()[0])
         timestamps = allHRdata[1]
         latest = timestamps.reverse()[0]
         return {"Is {} tachycardic?".format(patient_id): yesOrNo,
