@@ -38,7 +38,6 @@ def heart_rate_post():
     :param heart_rate: heart rate as integer
     :returns: updated records as JSON
     """
-    """EMAIL"""
     new_HR = request.get_json()
     from outsource import add_heart_rate
     try:

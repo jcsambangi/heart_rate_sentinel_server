@@ -21,6 +21,8 @@ def validate_new_patient(new_patient_data):
         raise TypeError
     if type(npdata["attending_email"]) is not str:
         raise ValueError
+    if "@" not in npdata["attending_email"]:
+        raise ValueError
     if "user_age" not in npdata:
         raise TypeError
     age = npdata["user_age"]
