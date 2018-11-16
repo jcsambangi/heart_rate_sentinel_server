@@ -116,7 +116,8 @@ def interval_average():
     query_interval_average = request.get_json()
     from outsource import get_interval_average
     try:
-        interval_average = get_interval_average(query_interval_average, patientRecord)
+        interval_average = get_interval_average(query_interval_average,
+                                                patientRecord)
         return jsonify(interval_average), 200
     except TypeError:
         return jsonify("Please check that all fields were input."), 400

@@ -7,6 +7,7 @@ from sendgrid.helpers.mail import *
 
 ages = [1/365, 3/365, 1/52, 1/12, 3/12, 6/12, 1, 3, 5, 8, 12, 15]
 cutoffs = [159, 166, 182, 179, 186, 169, 151, 137, 133, 130, 119, 100]
+eKEY = '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'
 
 
 def is_tachycardic(age, latestHR):
@@ -38,7 +39,7 @@ def send_email(attending_email, patient_id):
     :param patient_id: patient who is tachycardic
     :returns: status code associated with request
     """
-    sg = sendgrid.SendGridAPIClient(apikey='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')
+    sg = sendgrid.SendGridAPIClient(apikey=eKEY)
     to_email = Email(attending_email)
     from_email = Email("jcsambangi@gmail.com")
     subject = "Tachycardia Warning"
