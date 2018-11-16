@@ -98,7 +98,7 @@ def get_average(patient_id, patientRecord):
             summation += x
         average_HR = round(summation/len(HRs))
         return average_HR
-    else: 
+    else:
         raise ValueError
 
 
@@ -118,7 +118,7 @@ def get_interval_average(query_interval_average, patientRecord):
         index = 0
         total = len(allHRdata[1])-1
         while index <= total and allHRdata[1][index] <= startTime:
-           index += 1
+            index += 1
         if index > total:
             return "No heart rate measurements since this date."
         summation = 0

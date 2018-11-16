@@ -12,7 +12,7 @@ badNewData = [
         {"patient_id": "1", "user_age": 50},
         {"patient_id": "1", "attending_email": 3, "user_age": 50},
         {"patient_id": "1", "attending_email": "suyash.kumar@duke.edu"},
-         {"patient_id": "1", "attending_email": "suyash.kumar2duke.edu",
+        {"patient_id": "1", "attending_email": "suyash.kumar2duke.edu",
             "user_age": 50},
         {"patient_id": "1", "attending_email": "suyash.kumar@duke.edu",
             "user_age": "50"},
@@ -21,7 +21,7 @@ badNewData = [
 ]
 goodNewData = {
     "patient_id": "1",
-    "attending_email": "suyash.kumar@duke.edu", 
+    "attending_email": "suyash.kumar@duke.edu",
     "user_age": 50
 }
 badHRData = [

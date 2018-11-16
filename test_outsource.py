@@ -68,7 +68,7 @@ def test_add_heart_rate_good():
     from outsource import add_heart_rate
     newPatientRecord = add_heart_rate(goodHRdata, patientRecord2)
     dt = newPatientRecord["2"][2][1][1]-checkHRPatientRecord["2"][2][1][1]
-    if dt < timedelta(hours = 1):
+    if dt < timedelta(hours=1):
         newPatientRecord["2"][2][1][1] = checkHRPatientRecord["2"][2][1][1]
     assert newPatientRecord == checkHRPatientRecord
 
@@ -118,8 +118,8 @@ def test_get_average_bad():
 
 def test_get_interval_average_good():
     from outsource import get_interval_average
-    purportedAverage = get_interval_average(goodIntervalAverageRequest, patientRecord)
-    assert purportedAverage == round((75+110)/2)
+    pAverage = get_interval_average(goodIntervalAverageRequest, patientRecord)
+    assert pAverage == round((75+110)/2)
 
 
 def test_get_interval_average_bad():

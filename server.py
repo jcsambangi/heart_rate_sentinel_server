@@ -67,7 +67,7 @@ def heart_rate_get(patient_id):
         return jsonify("Please initialize the patient first."), 400
     except:
         return jsonify("Something went wrong."), 501
-    
+
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def status(patient_id):
@@ -97,7 +97,7 @@ def average(patient_id):
     from outsource import get_average
     try:
         return jsonify(get_average(patient_id, patientRecord)), 200
-     except TypeError:
+    except TypeError:
         return jsonify("Please check that patient id is a string."), 400
     except ValueError:
         return jsonify("Please initialize the patient first."), 400
