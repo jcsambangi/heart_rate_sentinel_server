@@ -12,5 +12,5 @@ This software is a server built to store and lightly analyze heart rate data for
   + `GET /api/heart_rate/average/<patient_id>`
 
 ## Using the Server
-The server should be deployed and can be accessed at the following address and port:
+The server can be run from the `server.py` module. It was deployed at release time and can be accessed at the following address and port:
   + `http://vcm-7315.vm.duke.edu:5000/`
