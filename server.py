@@ -86,7 +86,7 @@ def status(patient_id):
     except TypeError:
         return jsonify("Please check that patient id is a string."), 400
     except ValueError:
-        return jsonify("Please initialize the patient first."), 400
+        return jsonify("The patient must be initialized and have data."), 400
     except:
         return jsonify("Something went wrong."), 501
 
@@ -105,7 +105,7 @@ def average(patient_id):
     except TypeError:
         return jsonify("Please check that patient id is a string."), 400
     except ValueError:
-        return jsonify("Please initialize the patient first."), 400
+        return jsonify("The patient must be initialized and have data."), 400
     except:
         return jsonify("Something went wrong."), 501
 
@@ -128,7 +128,7 @@ def interval_average():
     except TypeError:
         return jsonify("Please check that all fields were input."), 400
     except ValueError:
-        return jsonify("Please check that input data is correct."), 400
+        return jsonify("Please check input and that patient has data."), 400
     except:
         return jsonify("Something went wrong."), 501
 

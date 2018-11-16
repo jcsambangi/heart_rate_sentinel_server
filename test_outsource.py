@@ -56,6 +56,10 @@ noDataAverageRequest = {
     "patient_id": "tester",
     "heart_rate_average_since": "2018-12-09 11:00:36.372339"
 }
+deadRequest = {
+    "patient_id": "1",
+    "heart_rate_average_since": "2018-12-09 11:00:36.372339"
+}
 
 
 def test_add_new_patient():
@@ -105,6 +109,12 @@ def test_get_status_bad():
         get_status("probably_not_here", patientRecord)
 
 
+def test_get_status_noData():
+    from outsource import get_status
+    with pytest.raises(ValueError):
+        get_status("1", checkUpdatedPatientRecord)
+
+
 def test_get_average_good():
     from outsource import get_average
     assert get_average("tester", patientRecord) == round((60+75+110)/3)
@@ -114,6 +124,12 @@ def test_get_average_bad():
     from outsource import get_average
     with pytest.raises(ValueError):
         get_average("probably_not_here", patientRecord)
+
+
+def test_get_average_noData():
+    from outsource import get_average
+    with pytest.raises(ValueError):
+        get_average("1", checkUpdatedPatientRecord)
 
 
 def test_get_interval_average_good():
@@ -132,3 +148,9 @@ def test_get_interval_average_no_set():
     from outsource import get_interval_average
     wantedAverage = get_interval_average(noDataAverageRequest, patientRecord)
     assert wantedAverage == "No heart rate measurements since this date."
+
+
+def test_get_interval_average_noData():
+    from outsource import get_interval_average
+    with pytest.raises(ValueError):
+        get_interval_average(deadRequest, checkUpdatedPatientRecord)
