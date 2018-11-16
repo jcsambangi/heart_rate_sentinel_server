@@ -1,5 +1,5 @@
 # heart_rate_sentinel_server
-BME 590.06: Heart Rate Sentinel Server Assignment
+BME 590.06: Heart Rate Sentinel Server Assignment  
 v1.0.0 released 11/16/18 by Jaydeep Sambangi (GitHub: jcsambangi, NetID: js593)
 
 ## Overview
