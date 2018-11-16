@@ -16,6 +16,7 @@ def new_patient():
     :param user_age: patient's age in years as integer
     :returns: updated records as JSON
     """
+    global patientRecord
     new_patient_data = request.get_json()
     from outsource import add_new_patient
     try:
@@ -38,6 +39,7 @@ def heart_rate_post():
     :param heart_rate: heart rate as integer
     :returns: updated records as JSON
     """
+    global patientRecord
     new_HR = request.get_json()
     from outsource import add_heart_rate
     try:
@@ -58,6 +60,7 @@ def heart_rate_get(patient_id):
     :param patient_id: patient id as string
     :returns: list of HRs as JSON
     """
+    global patientRecord
     from outsource import get_heart_rates
     try:
         return jsonify(get_heart_rates(patient_id, patientRecord)), 200
@@ -76,6 +79,7 @@ def status(patient_id):
     :param patient_id: patient id as string
     :returns: whether patient is tachycardic and last timestamp
     """
+    global patientRecord
     from outsource import get_status
     try:
         return jsonify(get_status(patient_id, patientRecord)), 200
@@ -94,6 +98,7 @@ def average(patient_id):
     :param patient_id: patient id as string
     :returns: average HR as JSON
     """
+    global patientRecord
     from outsource import get_average
     try:
         return jsonify(get_average(patient_id, patientRecord)), 200
@@ -113,6 +118,7 @@ def interval_average():
     :param heart_rate_average_since: timestamp as string
     :returns: average HR over interval as JSON
     """
+    global patientRecord
     query_interval_average = request.get_json()
     from outsource import get_interval_average
     try:
