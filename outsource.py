@@ -69,15 +69,18 @@ def get_status(patient_id, patientRecord):
         from tachycardia import is_tachycardic
         allHRdata = patientRecord[patient_id][2]
         HRs = allHRdata[0]
-        HRs.reverse()
-        yesOrNo = is_tachycardic(patientRecord[patient_id][1], HRs[0])
-        timestamps = allHRdata[1]
-        timestamps.reverse()
-        latest = timestamps[0].strftime("%Y-%m-%d %H:%M:%S.%f")
-        timestamps.reverse()
-        HRs.reverse()
-        return {"Is {} tachycardic?".format(patient_id): yesOrNo,
-                "Time of latest heart rate measurement": latest}
+        if not HRs:
+            raise ValueError
+        else:
+            HRs.reverse()
+            yesOrNo = is_tachycardic(patientRecord[patient_id][1], HRs[0])
+            timestamps = allHRdata[1]
+            timestamps.reverse()
+            latest = timestamps[0].strftime("%Y-%m-%d %H:%M:%S.%f")
+            timestamps.reverse()
+            HRs.reverse()
+            return {"Is {} tachycardic?".format(patient_id): yesOrNo,
+                    "Time of latest heart rate measurement": latest} 
     else:
         raise ValueError
 
@@ -93,11 +96,14 @@ def get_average(patient_id, patientRecord):
     patient_id = check_patient_id(patient_id)
     if patient_id in patientRecord:
         HRs = patientRecord[patient_id][2][0]
-        summation = 0
-        for x in HRs:
-            summation += x
-        average_HR = round(summation/len(HRs))
-        return average_HR
+        if not HRs:
+            raise ValueError
+        else:
+            summation = 0
+            for x in HRs:
+                summation += x
+            average_HR = round(summation/len(HRs))
+            return average_HR
     else:
         raise ValueError
 
@@ -115,17 +121,20 @@ def get_interval_average(query_interval_average, patientRecord):
         patientID = interval["patient_id"]
         startTime = interval["heart_rate_average_since"]
         allHRdata = patientRecord[patientID][2]
-        index = 0
-        total = len(allHRdata[1])-1
-        while index <= total and allHRdata[1][index] <= startTime:
-            index += 1
-        if index > total:
-            return "No heart rate measurements since this date."
-        summation = 0
-        numSum = len(allHRdata[1])-index
-        for i in range(index, total+1):
-            summation += allHRdata[0][i]
-        interval_average_HR = round(summation/numSum)
-        return interval_average_HR
+        if not allHRdata[0]:
+            raise ValueError
+        else:
+            index = 0
+            total = len(allHRdata[1])-1
+            while index <= total and allHRdata[1][index] <= startTime:
+                index += 1
+            if index > total:
+                return "No heart rate measurements since this date."
+            summation = 0
+            numSum = len(allHRdata[1])-index
+            for i in range(index, total+1):
+                summation += allHRdata[0][i]
+            interval_average_HR = round(summation/numSum)
+            return interval_average_HR
     else:
         raise ValueError
