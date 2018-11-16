@@ -17,13 +17,11 @@ badNewData = [
         {"patient_id": "1", "attending_email": "suyash.kuamr@duke.edu",
             "user_age": -1},
 ]
-
 goodNewData = {
     "patient_id": "1",
     "attending_email": "suyash.kumar@duke.edu", 
     "user_age": 50
 }
-
 badHRData = [
         "hello",
         {"heart_rate": 100},
@@ -32,12 +30,10 @@ badHRData = [
         {"patient_id": "test", "heart_rate": "hello"},
         {"patient_id": "test", "heart_rate": -5},
 ]
-
 goodHRData = {
     "patient_id": "1",
     "heart_rate": 100
 }
-
 badIntervalData = [
         "really bad",
         {"heart_rate_average_since": "2018-03-09 11:00:36.372339"},
@@ -47,7 +43,6 @@ badIntervalData = [
         {"patient_id": 1, "heart_rate_average_since": 2018},
         {"patient_id": 1, "heart_rate_average_since": "2018-03-09"},
 ]
-
 goodInterval = {
     "patient_id": "1",
     "heart_rate_average_since": "2018-03-09 11:00:36.372339"
